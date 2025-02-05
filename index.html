@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Skill Matcher</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Job Skill Matcher</h1>
+        <form method="POST">
+            <label for="skills">Skills (comma separated):</label>
+            <input type="text" id="skills" name="skills" required><br><br>
+
+            <label for="education">Education:</label>
+            <input type="text" id="education" name="education" required><br><br>
+
+            <label for="job_type">Preferred Job Type:</label>
+            <input type="text" id="job_type" name="job_type" required><br><br>
+
+            <label for="location">Preferred Location:</label>
+            <input type="text" id="location" name="location" required><br><br>
+
+            <button type="submit">Find Jobs</button>
+        </form>
+
+        {% if matched_jobs is not none %}
+            {% if matched_jobs %}
+                <h2>Matched Jobs</h2>
+                <ul>
+                    {% for job in matched_jobs %}
+                        <li>
+                            <strong>{{ job['title'] }}</strong><br>
+                            Location: {{ job['location'] }}<br>
+                            Job Type: {{ job['job_type'] }}<br>
+                            Skills Required: {{ job['skills']|join(', ') }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No matches found for your criteria.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
